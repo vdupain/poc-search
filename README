@@ -10,3 +10,23 @@ mvn exec:java -Dexec.mainClass=org.springframework.batch.core.launch.support.Com
 
 # Indexation ElasticSearch
 mvn exec:java -Dexec.mainClass=org.springframework.batch.core.launch.support.CommandLineJobRunner -Dexec.args="jobs.xml esJob"
+
+# Query geo_distance
+{
+  "query": {
+    "filtered": {
+      "query": {
+        "match_all": {}
+      },
+      "filter": {
+        "geo_distance": {
+          "distance": "100km",
+          "location": {
+            "lat": 42,
+            "lon": 1.6
+          }
+        }
+      }
+    }
+  }
+}

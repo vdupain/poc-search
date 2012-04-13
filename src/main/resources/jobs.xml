@@ -62,9 +62,11 @@
       </tasklet>
       <end on="*" />
     </step>
+    <!--
     <listeners>
       <listener ref="jobListener" />
     </listeners>
+     -->
   </job>
 
 
@@ -76,7 +78,7 @@
   </beans:bean>
 
   <!-- To run the job from the command line type the following: mvn exec:java -Dexec.mainClass=org.springframework.batch.core.launch.support.CommandLineJobRunner 
-    -Dexec.args="jobs2.xml Job" -->
+    -Dexec.args="jobs.xml esJob" -->
 
 
 

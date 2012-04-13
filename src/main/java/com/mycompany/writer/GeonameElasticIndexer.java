@@ -9,6 +9,7 @@ import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.common.xcontent.XContentFactory;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -25,7 +26,7 @@ public class GeonameElasticIndexer implements ItemWriter<Geoname>,InitializingBe
 	
 
 	public void write(List<? extends Geoname> geonames)
-			throws Exception {
+			throws Exception {        
 		BulkRequestBuilder bulkRequest = client.prepareBulk();
 		for (Geoname geoname : geonames) {
 			nbWrite++;
@@ -40,6 +41,7 @@ public class GeonameElasticIndexer implements ItemWriter<Geoname>,InitializingBe
 							.field("alternatenames", geoname.getAlternatenames())
 							.field("latitude", geoname.getLatitude())
 							.field("longitude", geoname.getLongitude())
+							.startObject("location").field("lat", geoname.getLatitude()).field("lon", geoname.getLongitude()).endObject()
 							.field("featureClass", geoname.getFeatureClass())
 							.field("featureCode", geoname.getFeatureCode())
 							.field("countryCode", geoname.getCountryCode())
@@ -70,6 +72,12 @@ public class GeonameElasticIndexer implements ItemWriter<Geoname>,InitializingBe
 		client = new TransportClient()
 		.addTransportAddress(new InetSocketTransportAddress("localhost",
 				9300));
+		String mapping = XContentFactory.jsonBuilder().startObject().startObject("geoname")
+                .startObject("properties").startObject("location").field("type", "geo_point").field("lat_lon", true).endObject().endObject()
+                .endObject().endObject().string();
+		client.admin().indices().prepareCreate("geonames").addMapping("geoname", mapping).execute().actionGet();
+        client.admin().cluster().prepareHealth().setWaitForGreenStatus().execute().actionGet();
+
 	}
 
 }
