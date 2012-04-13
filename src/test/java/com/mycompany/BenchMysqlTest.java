@@ -31,9 +31,9 @@ public class BenchMysqlTest {
     public void setUp() {
         ds = new DriverManagerDataSource();
         ds.setDriverClassName("com.mysql.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://localhost:3306/rechercheBench");
+        ds.setUrl("jdbc:mysql://localhost:3306/poc-search");
         ds.setUsername("root");
-        ds.setPassword("");
+        ds.setPassword("root");
         jdbcTemplate = new JdbcTemplate(ds);
         jdbcTemplate.setMaxRows(100);
         start = System.currentTimeMillis();
