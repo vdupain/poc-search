@@ -72,7 +72,7 @@
     <beans:property name="dataSource" ref="dataSource" />
     <beans:property name="sql"
       value="insert into allCountries (geo_id,geo_name,geo_ansiname,geo_alternate_names,geo_latitude,geo_longitude,geo_feature_class,geo_feature_code,geo_country_code,geo_country_code2,geo_admin1_code,geo_admin2_code,geo_admin3_code,geo_admin4_code,geo_population,geo_elevation,geo_gtopo30,geo_timezone,geo_mod_date) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" />
-    <beans:property name="itemPreparedStatementSetter" ref="StatementSetter" />
+    <beans:property name="itemPreparedStatementSetter" ref="geonameStatementSetter" />
   </beans:bean>
 
   <!-- To run the job from the command line type the following: mvn exec:java -Dexec.mainClass=org.springframework.batch.core.launch.support.CommandLineJobRunner 
