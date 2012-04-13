@@ -23,6 +23,5 @@ public class PersonnePhysiqueRowMapper implements ParameterizedRowMapper<Personn
         p.setCodePostal((Integer) result.get("codePostal"));
         p.setPays(result.get("pays").toString());
         return p;
-
     }
 }

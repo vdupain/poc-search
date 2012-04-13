@@ -17,7 +17,7 @@ public class PersonnePhysiqueReader implements ItemReader<PersonnePhysique> {
 
     public PersonnePhysique read() {
 
-        int count = 10;
+        int count = 1000000;
 		if (counter < count) {
             PersonnePhysique p = new PersonnePhysique();
             p.setNom(df.getLastName());

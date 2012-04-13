@@ -16,19 +16,14 @@ public final class JobListener implements JobExecutionListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(JobListener.class);
 
     public void beforeJob(JobExecution jobExecution) {
-
     }
 
     public void afterJob(JobExecution jobExecution) {
         LOGGER.info("{}", jobExecution.getJobInstance().getJobName());
-
         Collection<StepExecution> stepExecutions = jobExecution.getStepExecutions();
-
         for (StepExecution s : stepExecutions){
             LOGGER.debug("{}", s.getSummary());
         }
-        
-        
         LOGGER.info("Duree d'execution : {} ms", jobExecution.getEndTime().getTime() - jobExecution.getStartTime().getTime());
     }
 

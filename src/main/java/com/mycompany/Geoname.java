@@ -2,7 +2,7 @@ package com.mycompany;
 
 import java.util.Date;
 
-public class Country {
+public class Geoname {
 
 	private int geonameId;
 	private String name;

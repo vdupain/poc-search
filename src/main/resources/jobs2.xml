@@ -17,43 +17,24 @@
 		</tasklet>
 	</step>
 
-	<!-- Tokenizer - Converts a delimited string into a Set of Fields -->
-	<beans:bean name="defaultTokenizer"
-		class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
-		<beans:property name="delimiter">
-			<util:constant
-				static-field="org.springframework.batch.item.file.transform.DelimitedLineTokenizer.DELIMITER_TAB" />
-		</beans:property>
-		<beans:property name="quoteCharacter" value="\u0000" />
-	</beans:bean>
-
-	<!-- FieldSetMapper - Populates a bean's attributes with using the FieldSet -->
-	<beans:bean name="countryFieldSetMapper"
-		class="com.mycompany.reader.CountryFieldSetMapper" />
-
-	<!-- LineMapper - Uses the tokenizer and Mapper to create instances of a 
-		Bean. -->
-	<beans:bean name="countryLineMapper"
-		class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
-		<beans:property name="lineTokenizer" ref="defaultTokenizer" />
-		<beans:property name="fieldSetMapper" ref="countryFieldSetMapper" />
-	</beans:bean>
-
-	<!-- Reader - used by the tasklet to process one Item from the input. -->
-	<beans:bean name="countryReader"
-		class="org.springframework.batch.item.file.FlatFileItemReader">
-		<beans:property name="encoding" value="UTF-8" />
-		<beans:property name="lineMapper" ref="countryLineMapper" />
-		<beans:property name="resource" value="allCountries.txt" />
-	</beans:bean>
-
-
 	<beans:bean id="jobListener" class="com.mycompany.listener.JobListener" />
 
-	<job id="countryJob">
+	<job id="insertJob">
 		<step id="step1" parent="abstractParentStep">
 			<tasklet>
-				<chunk reader="countryReader" writer="countryjdbcBatchWriter" />
+				<chunk reader="personnePhysiqueReader" writer="personnePhysiquejdbcBatchWriter" />
+			</tasklet>
+			<end on="*" />
+		</step>
+		<listeners>
+			<listener ref="jobListener" />
+		</listeners>
+	</job>
+
+	<job id="elasticJob">
+		<step id="elasticStep" parent="abstractParentStep">
+			<tasklet>
+				<chunk reader="personnePhysiqueReader" writer="personnePhysiqueElasticIndexer" />
 			</tasklet>
 			<end on="*" />
 		</step>
@@ -63,20 +44,18 @@
 	</job>
 
 
-	<beans:bean id="countryjdbcBatchWriter"
+	<beans:bean id="personnePhysiquejdbcBatchWriter"
 		class="org.springframework.batch.item.database.JdbcBatchItemWriter">
 		<beans:property name="dataSource" ref="dataSource" />
 		<beans:property name="sql"
-			value="insert into allCountries (geo_id,geo_name,geo_ansiname,geo_alternate_names,geo_latitude,geo_longitude,geo_feature_class,geo_feature_code,geo_country_code,geo_country_code2,geo_admin1_code,geo_admin2_code,geo_admin3_code,geo_admin4_code,geo_population,geo_elevation,geo_gtopo30,geo_timezone,geo_mod_date) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)" />
-		<beans:property name="itemPreparedStatementSetter" ref="countryStatementSetter" />
+			value="insert into personnephysique (prenom, nom, codePostal, pays, dateNaissance) values (?, ?, ?, ?, ?)" />
+		<beans:property name="itemPreparedStatementSetter" ref="personnePhysiqueStatementSetter" />
 	</beans:bean>
 
-	<!-- To run the job from the command line type the following: mvn exec:java 
-		-Dexec.mainClass=org.springframework.batch.core.launch.support.CommandLineJobRunner 
-		-Dexec.args="jobs2.xml countryJob" -->
-
-
-
+<!--
+To run the job from the command line type the following:
+mvn exec:java -Dexec.mainClass=org.springframework.batch.core.launch.support.CommandLineJobRunner -Dexec.args="jobs.xml insertJob"
+ -->
 
 
 </beans:beans>
