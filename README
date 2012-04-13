@@ -1,2 +1,6 @@
+curl -O -L http://download.geonames.org/export/dump/allCountries.zip
+unzip allCountries.zip -d src/main/resources
+rm allCountries.zip
+
 # Import MySql
 mysqlimport -h localhost -u root -proot --fields-terminated-by='\t' --lines-terminated-by='\n' --local poc-search src/main/resources/allCountries.txt
