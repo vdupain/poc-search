@@ -3,9 +3,9 @@ unzip allCountries.zip -d src/main/resources
 rm allCountries.zip
 
 # Import MySql
-#mysqlimport -h localhost -u root -proot --fields-terminated-by='\t' --lines-terminated-by='\n' --local poc-search src/main/resources/allCountries.txt
+mysqlimport -h localhost -u root -proot --fields-terminated-by='\t' --lines-terminated-by='\n' --local poc-search allCountries.txt
 # ou avec Spring Batch
-#mvn exec:java -Dexec.mainClass=org.springframework.batch.core.launch.support.CommandLineJobRunner -Dexec.args="jobs.xml geonameJob"
+mvn exec:java -Dexec.mainClass=org.springframework.batch.core.launch.support.CommandLineJobRunner -Dexec.args="jobs.xml geonameJob"
 
 # Indexation ElasticSearch
 mvn exec:java -Dexec.mainClass=org.springframework.batch.core.launch.support.CommandLineJobRunner -Dexec.args="jobs.xml esJob"

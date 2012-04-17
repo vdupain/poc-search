@@ -25,9 +25,6 @@
 		<guava.version>11.0.1</guava.version>
 		<slf4j.version>1.6.4</slf4j.version>
 		<logback.version>1.0.0</logback.version>
-		<!-- Some properties for github that you have to define in your settings.xml -->
-		<!-- <github.global.oauth2token>token</github.global.oauth2token> <github.global.userName>username</github.global.userName> 
-			<github.global.password>password</github.global.password> -->
 	</properties>
 
 	<dependencies>

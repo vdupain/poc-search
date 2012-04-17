@@ -8,7 +8,7 @@ public class MyDummyRiverModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		bind(River.class).to(DummyRiver.class).asEagerSingleton();
+		bind(River.class).to(MyDummyRiver.class).asEagerSingleton();
 	}
 
 }

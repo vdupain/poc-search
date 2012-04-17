@@ -37,7 +37,7 @@
   <beans:bean name="geonameReader" class="org.springframework.batch.item.file.FlatFileItemReader">
     <beans:property name="encoding" value="UTF-8" />
     <beans:property name="lineMapper" ref="geonameLineMapper" />
-    <beans:property name="resource" value="allCountries.txt" />
+    <beans:property name="resource" value="file:allCountries.txt" />
   </beans:bean>
 
 
