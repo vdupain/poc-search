@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `allCountries` (
   `geo_id` int(11) unsigned NOT NULL,
   `geo_name` varchar(200) NOT NULL DEFAULT '',
   `geo_ansiname` varchar(200) NOT NULL DEFAULT '',
-  `geo_alternate_names` varchar(2000) NOT NULL DEFAULT '',
+  `geo_alternate_names` varchar(6000) NOT NULL DEFAULT '',
   `geo_latitude` double(11,7) NOT NULL DEFAULT '0.0000000',
   `geo_longitude` double(11,7) NOT NULL DEFAULT '0.0000000',
   `geo_feature_class` char(1) DEFAULT NULL,
