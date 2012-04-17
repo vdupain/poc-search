@@ -10,6 +10,13 @@
 	<name>poc-search</name>
 	<url>http://maven.apache.org</url>
 
+	<scm>
+		<connection>scm:git@github.com:vdupain/poc-search.git</connection>
+		<url>scm:git@github.com:vdupain/poc-search.git</url>
+		<developerConnection>scm:git@github.com:vdupain/poc-search.git</developerConnection>
+	</scm>
+
+
 	<properties>
 		<spring.framework.version>3.1.1.RELEASE</spring.framework.version>
 		<spring-batch.version>2.1.8.RELEASE</spring-batch.version>
@@ -18,6 +25,12 @@
 		<guava.version>11.0.1</guava.version>
 		<slf4j.version>1.6.4</slf4j.version>
 		<logback.version>1.0.0</logback.version>
+		<!-- Some properties for github that you have to define in your settings.xml -->
+		<!-- 
+		<github.global.oauth2token>token</github.global.oauth2token>
+		<github.global.userName>username</github.global.userName>
+		<github.global.password>password</github.global.password>
+		-->
 	</properties>
 
 	<dependencies>
@@ -182,4 +195,19 @@
 			<url>http://oss.sonatype.org/content/repositories/releases/</url>
 		</repository>
 	</repositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>downloads-maven-plugin</artifactId>
+				<version>0.4</version>
+				<configuration>
+					<description>${project.version} release of ${project.name}</description>
+					<override>true</override>
+					<includeAttached>true</includeAttached>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
