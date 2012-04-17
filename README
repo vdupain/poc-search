@@ -1,5 +1,7 @@
+#Database Geonames: http://download.geonames.org/export/dump/
+#The data format is tab-delimited text in utf8 encoding.
 curl -O -L http://download.geonames.org/export/dump/allCountries.zip
-unzip allCountries.zip -d src/main/resources
+unzip allCountries.zip
 rm allCountries.zip
 
 # Import MySql
