@@ -13,6 +13,7 @@ mvn exec:java -Dexec.mainClass=org.springframework.batch.core.launch.support.Com
 mvn exec:java -Dexec.mainClass=org.springframework.batch.core.launch.support.CommandLineJobRunner -Dexec.args="jobs.xml esJob"
 
 # Query geo_distance
+curl -XGET 'http://localhost:9200/geonames/_search?pretty=true' -d '
 {
   "query": {
     "filtered": {
@@ -30,4 +31,4 @@ mvn exec:java -Dexec.mainClass=org.springframework.batch.core.launch.support.Com
       }
     }
   }
-}
+}'
