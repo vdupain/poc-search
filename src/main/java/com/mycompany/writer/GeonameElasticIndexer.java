@@ -4,12 +4,15 @@ import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 import java.util.List;
 
+import org.elasticsearch.ExceptionsHelper;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.cluster.block.ClusterBlockException;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.XContentFactory;
+import org.elasticsearch.indices.IndexAlreadyExistsException;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -72,11 +75,22 @@ public class GeonameElasticIndexer implements ItemWriter<Geoname>,InitializingBe
 		client = new TransportClient()
 		.addTransportAddress(new InetSocketTransportAddress("localhost",
 				9300));
-		String mapping = XContentFactory.jsonBuilder().startObject().startObject("geoname")
-                .startObject("properties").startObject("location").field("type", "geo_point").field("lat_lon", true).endObject().endObject()
-                .endObject().endObject().string();
-		client.admin().indices().prepareCreate("geonames").addMapping("geoname", mapping).execute().actionGet();
-        client.admin().cluster().prepareHealth().setWaitForGreenStatus().execute().actionGet();
+		try {
+			String mapping = XContentFactory.jsonBuilder().startObject().startObject("geoname")
+	                .startObject("properties").startObject("location").field("type", "geo_point").field("lat_lon", true).endObject().endObject()
+	                .endObject().endObject().string();
+			client.admin().indices().prepareCreate("geonames").addMapping("geoname", mapping).execute().actionGet();
+	        client.admin().cluster().prepareHealth().setWaitForGreenStatus().execute().actionGet();
+		} catch (Exception ex) {
+			 if (ExceptionsHelper.unwrapCause(ex) instanceof IndexAlreadyExistsException) {
+	                // that's fine
+	            } else if (ExceptionsHelper.unwrapCause(ex) instanceof ClusterBlockException) {
+	                // ok, not recovered yet..., lets start indexing and hope we recover by the first bulk
+	                // TODO: a smarter logic can be to register for cluster event listener here, and only start sampling when the block is removed...
+	            } else {
+	                throw ex;
+	            }
+		}
 
 	}
 
