@@ -1,0 +1,19 @@
+{
+  "query": {
+    "filtered": {
+      "query": {
+        "match_all": {}
+      },
+      "filter": {
+        "geo_distance": {
+          "distance": "100km",
+          "location": {
+            "lat": 42,
+            "lon": 1.6
+          }
+        }
+      }
+    }
+  }
+}
+
