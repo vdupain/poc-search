@@ -58,15 +58,15 @@
   <job id="esJob">
     <step id="step2" parent="abstractParentStep">
       <tasklet>
-        <chunk reader="geonameReader" writer="geonameElasticIndexer" />
+        <chunk reader="geonameReader" writer="geonameElasticIndexer"   />
       </tasklet>
       <end on="*" />
     </step>
-    <!--
+    <!--  -->
     <listeners>
       <listener ref="jobListener" />
     </listeners>
-     -->
+    
   </job>
 
 

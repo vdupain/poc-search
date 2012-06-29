@@ -4,176 +4,194 @@ import java.util.Date;
 
 public class Geoname {
 
-	private int geonameId;
-	private String name;
-	private String asciiname;
-	private Date modificationDate;
-	private String timezone;
-	private int dem;
-	private int elevation;
-	private int population;
-	private String admin4Code;
-	private String admin3Code;
-	private String admin2Code;
-	private String admin1Code;
-	private String cc2;
-	private String countryCode;
-	private String featureCode;
-	private String featureClass;
-	private double longitude;
-	private double latitude;
-	private String alternatenames;
+    private int geonameId;
 
-	public void setGeonameId(int geonameId) {
-		this.geonameId = geonameId;
-	}
+    private String name;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    private String asciiname;
 
-	public void setAsciiname(String asciiname) {
-		this.asciiname = asciiname;
-	}
+    private Date modificationDate;
 
-	public void setAlternatenames(String alternatenames) {
-		this.alternatenames = alternatenames;
-	}
+    private String timezone;
 
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
+    private int dem;
 
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
+    private int elevation;
 
-	public void setFeatureClass(String featureClass) {
-		this.featureClass = featureClass;
-	}
+    private int population;
 
-	public void setFeatureCode(String featureCode) {
-		this.featureCode = featureCode;
-	}
+    private String admin4Code;
 
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
-	}
+    private String admin3Code;
 
-	public void setCC2(String cc2) {
-		this.cc2 = cc2;
-	}
+    private String admin2Code;
 
-	public void setAdmin1Code(String admin1Code) {
-		this.admin1Code = admin1Code;
-	}
+    private String admin1Code;
 
-	public void setAdmin2Code(String admin2Code) {
-		this.admin2Code = admin2Code;
-	}
+    private String cc2;
 
-	public void setAdmin3Code(String admin3Code) {
-		this.admin3Code = admin3Code;
-	}
+    private String countryCode;
 
-	public void setAdmin4Code(String admin4Code) {
-		this.admin4Code = admin4Code;
-	}
+    private String featureCode;
 
-	public void setPopulation(int population) {
-		this.population = population;
-	}
+    private String featureClass;
 
-	public void setElevation(int elevation) {
-		this.elevation = elevation;
-	}
+    private double longitude;
 
-	public void setDem(int dem) {
-		this.dem = dem;
-	}
+    private double latitude;
 
-	public void setTimezone(String timezone) {
-		this.timezone = timezone;
-	}
+    private String alternatenames;
 
-	public void setModificationDate(Date modificationDate) {
-		this.modificationDate = modificationDate;
-	}
+    public void setGeonameId(int geonameId) {
+        this.geonameId = geonameId;
+    }
 
-	public int getGeonameId() {
-		return geonameId;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setAsciiname(String asciiname) {
+        this.asciiname = asciiname;
+    }
 
-	public String getAsciiname() {
-		return asciiname;
-	}
+    public void setAlternatenames(String alternatenames) {
+        this.alternatenames = alternatenames;
+    }
 
-	public Date getModificationDate() {
-		return modificationDate;
-	}
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
 
-	public String getTimezone() {
-		return timezone;
-	}
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 
-	public int getDem() {
-		return dem;
-	}
+    public void setFeatureClass(String featureClass) {
+        this.featureClass = featureClass;
+    }
 
-	public int getElevation() {
-		return elevation;
-	}
+    public void setFeatureCode(String featureCode) {
+        this.featureCode = featureCode;
+    }
 
-	public int getPopulation() {
-		return population;
-	}
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
 
-	public String getAdmin4Code() {
-		return admin4Code;
-	}
+    public void setCC2(String cc2) {
+        this.cc2 = cc2;
+    }
 
-	public String getAdmin3Code() {
-		return admin3Code;
-	}
+    public void setAdmin1Code(String admin1Code) {
+        this.admin1Code = admin1Code;
+    }
 
-	public String getAdmin2Code() {
-		return admin2Code;
-	}
+    public void setAdmin2Code(String admin2Code) {
+        this.admin2Code = admin2Code;
+    }
 
-	public String getAdmin1Code() {
-		return admin1Code;
-	}
+    public void setAdmin3Code(String admin3Code) {
+        this.admin3Code = admin3Code;
+    }
 
-	public String getCc2() {
-		return cc2;
-	}
+    public void setAdmin4Code(String admin4Code) {
+        this.admin4Code = admin4Code;
+    }
 
-	public String getCountryCode() {
-		return countryCode;
-	}
+    public void setPopulation(int population) {
+        this.population = population;
+    }
 
-	public String getFeatureCode() {
-		return featureCode;
-	}
+    public void setElevation(int elevation) {
+        this.elevation = elevation;
+    }
 
-	public String getFeatureClass() {
-		return featureClass;
-	}
+    public void setDem(int dem) {
+        this.dem = dem;
+    }
 
-	public double getLongitude() {
-		return longitude;
-	}
+    public void setTimezone(String timezone) {
+        this.timezone = timezone;
+    }
 
-	public double getLatitude() {
-		return latitude;
-	}
+    public void setModificationDate(Date modificationDate) {
+        this.modificationDate = modificationDate;
+    }
 
-	public String getAlternatenames() {
-		return alternatenames;
-	}
+    public int getGeonameId() {
+        return geonameId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAsciiname() {
+        return asciiname;
+    }
+
+    public Date getModificationDate() {
+        return modificationDate;
+    }
+
+    public String getTimezone() {
+        return timezone;
+    }
+
+    public int getDem() {
+        return dem;
+    }
+
+    public int getElevation() {
+        return elevation;
+    }
+
+    public int getPopulation() {
+        return population;
+    }
+
+    public String getAdmin4Code() {
+        return admin4Code;
+    }
+
+    public String getAdmin3Code() {
+        return admin3Code;
+    }
+
+    public String getAdmin2Code() {
+        return admin2Code;
+    }
+
+    public String getAdmin1Code() {
+        return admin1Code;
+    }
+
+    public String getCc2() {
+        return cc2;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public String getFeatureCode() {
+        return featureCode;
+    }
+
+    public String getFeatureClass() {
+        return featureClass;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public String getAlternatenames() {
+        return alternatenames;
+    }
 
 }
