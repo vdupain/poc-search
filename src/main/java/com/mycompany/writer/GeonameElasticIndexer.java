@@ -5,15 +5,10 @@ import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 import java.util.List;
 
 import org.elasticsearch.ExceptionsHelper;
-import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.cluster.block.ClusterBlockException;
-import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.indices.IndexAlreadyExistsException;
 import org.slf4j.Logger;
@@ -21,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mycompany.Geoname;
@@ -28,7 +24,8 @@ import com.mycompany.Geoname;
 @Component
 public class GeonameElasticIndexer implements ItemWriter<Geoname>,InitializingBean, DisposableBean {
 
-	private Client client;
+	@Autowired
+	private Client esClient;
 
 	private int nbWrite = 0;
 	
@@ -36,10 +33,10 @@ public class GeonameElasticIndexer implements ItemWriter<Geoname>,InitializingBe
  
 	public void write(List<? extends Geoname> geonames)
 			throws Exception {        
-		BulkRequestBuilder bulkRequest = client.prepareBulk();
+		BulkRequestBuilder bulkRequest = esClient.prepareBulk();
 		for (Geoname geoname : geonames) {
 			nbWrite++;
-			bulkRequest.add(client.prepareIndex("geonames", "geoname",
+			bulkRequest.add(esClient.prepareIndex("geonames", "geoname",
 					Integer.toString(nbWrite)).setSource(
 					jsonBuilder()
 							.startObject()
@@ -75,29 +72,22 @@ public class GeonameElasticIndexer implements ItemWriter<Geoname>,InitializingBe
 
 
 	public void destroy() throws Exception {
-		client.close();
+		esClient.close();
 	}
 
 	public void afterPropertiesSet() throws Exception {
-		Settings settings = ImmutableSettings.settingsBuilder()
-                //.put("cluster.name", "pocprod")
-//                .put("discovery.zen.ping.multicast.group", " 225.66.26.77")
-//                .put("discovery.zen.ping.multicast.port:", "54328")
-//                .put("discovery.zen.ping.multicast.address", "10.220.181.57")
-                .build();
-		client = new TransportClient(settings)
-		.addTransportAddress(new InetSocketTransportAddress("localhost",
-				9300));
 		try {
 			String mapping = XContentFactory.jsonBuilder().startObject().startObject("geoname")
 	                .startObject("properties").startObject("location").field("type", "geo_point").field("lat_lon", true).endObject().endObject()
 	                .endObject().endObject().string();
-			client.admin().indices().prepareCreate("geonames").addMapping("geoname", mapping).execute().actionGet();
-	        client.admin().cluster().prepareHealth().setWaitForGreenStatus().execute().actionGet();
+			esClient.admin().indices().prepareCreate("geonames").addMapping("geoname", mapping).execute().actionGet();
+	        esClient.admin().cluster().prepareHealth().setWaitForGreenStatus().execute().actionGet();
 		} catch (Exception ex) {
-			 if (ExceptionsHelper.unwrapCause(ex) instanceof IndexAlreadyExistsException) {
+			Throwable unwrapCause = ExceptionsHelper.unwrapCause(ex);
+			LOGGER.warn(unwrapCause.getMessage());
+			if (unwrapCause instanceof IndexAlreadyExistsException) {
 	                // that's fine
-	            } else if (ExceptionsHelper.unwrapCause(ex) instanceof ClusterBlockException) {
+	            } else if (unwrapCause instanceof ClusterBlockException) {
 	                // ok, not recovered yet..., lets start indexing and hope we recover by the first bulk
 	                // TODO: a smarter logic can be to register for cluster event listener here, and only start sampling when the block is removed...
 	            } else {
