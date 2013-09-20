@@ -25,7 +25,7 @@
 		<guava.version>11.0.1</guava.version>
 		<slf4j.version>1.6.4</slf4j.version>
 		<logback.version>1.0.0</logback.version>
-		<elasticsearch.version>0.19.7</elasticsearch.version>
+		<elasticsearch.version>0.90.5</elasticsearch.version>
 	</properties>
 
 	<dependencies>
@@ -178,49 +178,6 @@
 			<version>1.2.2</version>
 		</dependency>
 
-
 	</dependencies>
 
-	<repositories>
-		<repository>
-			<!-- For Elastic Search -->
-			<id>Sonatype</id>
-			<name>Sonatype</name>
-			<url>http://oss.sonatype.org/content/repositories/releases/</url>
-		</repository>
-	</repositories>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>com.github.github</groupId>
-				<artifactId>downloads-maven-plugin</artifactId>
-				<version>0.4</version>
-				<configuration>
-					<description>${project.version} release of ${project.name}</description>
-					<override>true</override>
-					<includeAttached>true</includeAttached>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.3</version>
-				<configuration>
-					<appendAssemblyId>false</appendAssemblyId>
-					<descriptors>
-						<descriptor>src/main/assembly/esplugin.xml</descriptor>
-					</descriptors>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id> <!-- this is used for inheritance merges -->
-						<phase>package</phase> <!-- bind to the packaging phase -->
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 </project>
